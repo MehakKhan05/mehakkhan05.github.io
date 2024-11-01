@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Welcome to My Developer Portfolio on Mehak&#39;s Developer Portfolio</title>
+    <link>https://mehakkhan.dev/</link>
+    <description>Recent content in Welcome to My Developer Portfolio on Mehak&#39;s Developer Portfolio</description>
+    <image>
+      <title>Mehak&#39;s Developer Portfolio</title>
+      <url>https://mehakkhan.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://mehakkhan.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.136.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 01 Nov 2024 14:28:57 -0400</lastBuildDate>
+    <atom:link href="https://mehakkhan.dev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Resume</title>
+      <link>https://mehakkhan.dev/resume/</link>
+      <pubDate>Fri, 01 Nov 2024 14:28:57 -0400</pubDate>
+      <guid>https://mehakkhan.dev/resume/</guid>
+      <description>&lt;h2 id=&#34;explore-my-professional-experience-below&#34;&gt;Explore my professional experience below.&lt;/h2&gt;
+
+
+&lt;p&gt;&lt;details &gt;
+  &lt;summary markdown=&#34;span&#34;&gt;🌐 AWS Developer – Toyota Canada Inc. (Sep 2024 – Present)&lt;/summary&gt;
+  🐥 Enhanced operational efficiency by 40% by developing Python-based automation scripts within GitLab CI/CD for AWS tasks, including tagging updates and EBS volume analysis.&lt;br&gt;
+🐥 Improved cloud security by designing a multi-tier AWS VPC architecture using CloudFormation, with integrated subnets, NACLs, and multiple availability zones.&lt;br&gt;
+🐥 Optimized cost management by 50% using AWS CUDOS, S3, Athena, Glue, and QuickSight for actionable insights on cloud expenses.
+&lt;/details&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Projects</title>
+      <link>https://mehakkhan.dev/projects/</link>
+      <pubDate>Fri, 01 Nov 2024 14:28:50 -0400</pubDate>
+      <guid>https://mehakkhan.dev/projects/</guid>
+      <description>&lt;p&gt;Explore some of my recent projects, ranging from industry experience to personal innovation.&lt;/p&gt;
+&lt;hr&gt;
+
+
+&lt;p&gt;&lt;details &gt;
+  &lt;summary markdown=&#34;span&#34;&gt;🚀 Toyota Innovation Hackathon&lt;/summary&gt;
+  Led a team in developing autonomous AGV navigation with ROS, reducing delivery times by 30%. Leveraged &lt;strong&gt;Python, ROS, Ubuntu,&lt;/strong&gt; and &lt;strong&gt;VMware&lt;/strong&gt; to optimize efficiency and reliability.
+&lt;em&gt;Outcome&lt;/em&gt;: Enhanced collaboration and implemented robust algorithms, significantly streamlining team operations.
+&lt;/details&gt;&lt;/p&gt;
+
+&lt;hr&gt;
+
+
+&lt;p&gt;&lt;details &gt;
+  &lt;summary markdown=&#34;span&#34;&gt;🖋️ Embedded Handwriting Recognition ML Software&lt;/summary&gt;
+  Built a real-time handwriting recognition system for embedded platforms, achieving 90%+ accuracy. Designed with &lt;strong&gt;Python, OpenCV, TensorFlow Lite,&lt;/strong&gt; and &lt;strong&gt;Raspberry Pi&lt;/strong&gt; for smooth, on-device performance.
+&lt;em&gt;Outcome&lt;/em&gt;: Delivered accurate classification on low-power hardware with minimized latency.
+&lt;/details&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>My First Post</title>
+      <link>https://mehakkhan.dev/posts/my-first-post/</link>
+      <pubDate>Fri, 01 Nov 2024 13:37:05 -0400</pubDate>
+      <guid>https://mehakkhan.dev/posts/my-first-post/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
