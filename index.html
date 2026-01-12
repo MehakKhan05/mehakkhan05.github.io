@@ -1,276 +1,736 @@
-<!DOCTYPE html>
-<html lang="en" dir="auto">
-
+<!doctype html>
+<html lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.136.5"><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>Mehak&#39;s Developer Portfolio</title>
-<meta name="keywords" content="Portfolio, Engineering, Software Development">
-<meta name="description" content="Showcasing my projects, skills, and professional experience.">
-<meta name="author" content="Mehak Khan">
-<link rel="canonical" href="https://mehakkhan.dev/">
-<meta name="google-site-verification" content="XYZabc">
-<meta name="yandex-verification" content="XYZabc">
-<meta name="msvalidate.01" content="XYZabc">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.54405a410796490bc874ab6181fac9b675753cc2b91375d8f882566459eca428.css" integrity="sha256-VEBaQQeWSQvIdKthgfrJtnV1PMK5E3XY&#43;IJWZFnspCg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mehakkhan.dev/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mehakkhan.dev/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mehakkhan.dev/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mehakkhan.dev/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mehakkhan.dev/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://mehakkhan.dev/index.xml">
-<link rel="alternate" hreflang="en" href="https://mehakkhan.dev/">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mehak Khan | Aspiring Hardware Systems Engineer</title>
+  <meta name="description" content="Mehak Khan — Aspiring Hardware Systems Engineer. Projects, notes, and internship learnings." />
+  <style>
+  :root{
+    --bg:#ffffff;
+    --text:#111111;
+    --muted:#666666;
+    --line:#e7e7e7;
+    --accent:#111111;
+    --max: 760px;
+    --ui: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: var(--serif);
+    line-height:1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a{color:inherit; text-decoration:none}
+  a:hover{text-decoration:underline}
 
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
+  .wrap{max-width:var(--max); margin:0 auto; padding:22px 18px 80px}
 
-            .list {
-                background: var(--theme);
-            }
+  header{
+    position:sticky;
+    top:0;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+    z-index:20;
+  }
+  .nav{
+    max-width:var(--max);
+    margin:0 auto;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    padding:14px 18px;
+    gap:14px;
+    font-family: var(--ui);
+  }
+  .brand{display:flex; flex-direction:column; gap:3px}
+  .brand .name{font-weight:700; letter-spacing:.2px}
+  .brand .tag{color:var(--muted); font-size:13px}
 
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
+  /* Substack-ish nav links: plain text */
+  .links{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+  .chip{
+    padding:0;
+    border:none;
+    border-radius:0;
+    color:var(--muted);
+    font-size:13px;
+    font-family: var(--ui);
+  }
+  .chip:hover{color:var(--text); text-decoration:none}
 
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
+  .hero{padding:18px 0 10px; display:grid; gap:10px}
+  h1{margin:0; font-size:36px; letter-spacing:-.2px; line-height:1.12}
+  .sub{color:var(--muted); max-width:72ch}
 
-    </style>
-</noscript><meta property="og:title" content="Welcome to My Developer Portfolio" />
-<meta property="og:description" content="Showcasing my projects, skills, and professional experience." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mehakkhan.dev/" /><meta property="og:site_name" content="Mehak&#39;s Developer Portfolio" />
+  /* No blocks: remove cards and heavy boxes */
+  .grid{display:block; margin-top: 0}
+  .card{
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+  .section{margin-top:26px}
+  .section h2{
+    margin:0 0 10px;
+    font-size:18px;
+    letter-spacing:.2px;
+    font-family: var(--ui);
+  }
+  .muted{color:var(--muted)}
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Welcome to My Developer Portfolio"/>
-<meta name="twitter:description" content="Showcasing my projects, skills, and professional experience."/>
+  /* About key-values: switch to simple inline text */
+  .kvs{display:grid; grid-template-columns: 1fr; gap:8px}
+  .kv{border:none; border-radius:0; padding:0}
+  .kv .k{font-size:12px; color:var(--muted); font-family: var(--ui)}
+  .kv .v{margin-top:2px; font-size:14px; font-family: var(--serif)}
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Mehak's Developer Portfolio",
-  "url": "https://mehakkhan.dev/",
-  "description": "Showcasing my projects, skills, and professional experience.",
-  "thumbnailUrl": "https://mehakkhan.dev/favicon.ico",
-  "sameAs": [
-      "https://linkedin.com/in/MehakKhan05", "https://github.com/MehakKhan05"
-  ]
-}
-</script>
+  /* Project cards become simple rows */
+  .cards{display:grid; grid-template-columns: 1fr; gap:0}
+  .proj{
+    border:none;
+    border-radius:0;
+    padding:12px 0;
+    display:grid;
+    gap:6px;
+    border-top:1px solid var(--line);
+  }
+  .proj:last-child{border-bottom:1px solid var(--line)}
+  .proj .title{font-weight:650; font-family: var(--ui)}
+  .proj .meta{color:var(--muted); font-size:13px; font-family: var(--ui)}
+  .proj .tags{display:flex; flex-wrap:wrap; gap:8px}
+  .tag{font-size:12px; color:var(--muted); border:none; border-radius:0; padding:0; font-family: var(--ui)}
+
+  .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-family: var(--ui)}
+  .btn{
+    appearance:none;
+    border:1px solid var(--line);
+    background: transparent;
+    color: var(--text);
+    border-radius: 10px;
+    padding:8px 10px;
+    font-weight: 600;
+    font-size:13px;
+    cursor:pointer;
+  }
+  .btn:hover{border-color:#cfcfcf}
+  .btn.secondary{color: var(--muted)}
+
+  input, textarea, select{
+    width:100%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--text);
+    padding:10px 12px;
+    outline:none;
+    font-family: var(--ui);
+    font-size:14px;
+  }
+  textarea{min-height: 180px; resize: vertical; line-height:1.55}
+
+  .split{display:grid; gap:12px}
+  @media (min-width: 900px){
+    .split{grid-template-columns: 0.9fr 1.1fr}
+    textarea{min-height: 360px}
+  }
+
+  /* Notes list: simple dividers */
+  .list{display:grid; gap:0}
+  .item{
+    padding:10px 0;
+    border:none;
+    border-top:1px solid var(--line);
+    border-radius: 0;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:flex-start;
+    font-family: var(--ui);
+  }
+  .item:last-child{border-bottom:1px solid var(--line)}
+  .item .left{display:grid; gap:4px}
+  .item .t{font-weight:650}
+  .item .d{color:var(--muted); font-size:13px}
+
+  .preview{
+    border-top:1px solid var(--line);
+    border-radius: 0;
+    padding:12px 0 0;
+    background: transparent;
+    overflow:auto;
+  }
+  .preview code{background:#f3f3f3; padding:2px 6px; border-radius:8px; border:none}
+  .preview pre{background:#f6f6f6; padding:12px; border-radius:12px; border:1px solid var(--line); overflow:auto}
+  .preview pre code{border:none; background:transparent; padding:0}
+
+  .hr{height:1px; background: var(--line); margin:18px 0}
+
+  footer{margin-top:34px; color:var(--muted); font-size:13px; font-family: var(--ui); border-top:1px solid var(--line); padding-top:16px}
+  .small{font-size:12px; color:var(--muted); font-family: var(--ui)}
+</style>
 </head>
-
-<body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="https://mehakkhan.dev/" accesskey="h" title="Home (Alt + H)">
-                <img src="https://mehakkhan.dev/apple-touch-icon.png" alt="" aria-label="logo"
-                    height="35">Home</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <ul id="menu">
-            <li>
-                <a href="https://mehakkhan.dev/projects/" title="Projects">
-                    <span>Projects</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mehakkhan.dev/resume/" title="Resume">
-                    <span>Resume</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://calendly.com/millynasir2005/15-minute-meeting" title="Let&#39;s Chat">
-                    <span>Let&#39;s Chat</span>&nbsp;
-                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="12" width="12">
-                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-                        <path d="M15 3h6v6"></path>
-                        <path d="M10 14L21 3"></path>
-                    </svg>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main"> 
-<article class="first-entry home-info">
-    <header class="entry-header">
-        <h1>Hey! I&rsquo;m Mehak :) 👋</h1>
-    </header>
-    <div class="entry-content">
-        An Electrical Engineering student at the University of Waterloo and aspiring software engineer. Experienced with AWS, automation, web dev, and always looking to learn more! Let&rsquo;s connect 😊
+<body>
+  <header>
+    <div class="nav">
+      <div class="brand">
+        <div class="name">Mehak Khan</div>
+        <div class="tag">Aspiring Hardware Systems Engineer</div>
+      </div>
+      <nav class="links" aria-label="Site">
+        <a class="chip" href="#projects">Projects</a>
+        <a class="chip" href="#notes">Notes</a>
+        <a class="chip" href="#internship">Internship</a>
+        <a class="chip" href="#contact">Contact</a>
+      </nav>
     </div>
-    <footer class="entry-footer">
-        <div class="social-icons" >
-    <a href="https://linkedin.com/in/MehakKhan05" target="_blank" rel="noopener noreferrer me"
-        title="Linkedin">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-    <rect x="2" y="9" width="4" height="12"></rect>
-    <circle cx="4" cy="4" r="2"></circle>
-</svg>
-    </a>
-    <a href="https://github.com/MehakKhan05" target="_blank" rel="noopener noreferrer me"
-        title="Github">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round">
-    <path
-        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
-    </path>
-</svg>
-    </a>
-</div>
-
-    </footer>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">My First Post
-      <span class="entry-hint" title="Draft">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
-          <path
-            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-        </svg>
-      </span>
-    </h2>
   </header>
-  <div class="entry-content">
-    <p></p>
-  </div>
-  <footer class="entry-footer"><span title='2024-11-01 13:37:05 -0400 EDT'>November 1, 2024</span>&nbsp;·&nbsp;0 min&nbsp;·&nbsp;0 words&nbsp;·&nbsp;Mehak Khan</footer>
-  <a class="entry-link" aria-label="post link to My First Post" href="https://mehakkhan.dev/posts/my-first-post/"></a>
-</article>
-    </main>
-    
-<footer class="footer">
-        <span>&copy; 2024 <a href="https://mehakkhan.dev/">Mehak&#39;s Developer Portfolio</a></span> · 
 
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
+  <main class="wrap">
+    <section class="hero" id="top">
+      <h1>Hardware, systems thinking, and clean documentation.</h1>
+      <div class="sub">
+        A simple home base for my projects, personal notes, and internship learnings.
+        This site is intentionally minimal and easy to maintain.
+      </div>
+      <div class="row">
+        <button class="btn" id="btnDownload">Download my notes (.json)</button>
+        <button class="btn secondary" id="btnUpload">Import notes</button>
+        <input id="fileInput" type="file" accept="application/json" style="display:none" />
+      </div>
+      <div class="small">Tip: Notes are saved in your browser (localStorage). Export regularly if you switch devices.</div>
+    </section>
 
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
+    <section class="grid">
+      <div class="card">
+        <div class="section">
+          <h2>About</h2>
+          <p class="muted">
+            I’m building fundamentals across embedded systems, RF/front-ends, PCB design, and practical industrial electrical systems.
+            I like documentation that’s clear, testable, and easy to revisit.
+          </p>
+          <div class="kvs" style="margin-top:10px">
+            <div class="kv">
+              <div class="k">Focus</div>
+              <div class="v">Hardware systems • Embedded • PCB • Signal chains</div>
+            </div>
+            <div class="kv">
+              <div class="k">Current mode</div>
+              <div class="v">Learning by building, documenting, and iterating</div>
+            </div>
+            <div class="kv">
+              <div class="k">What I track</div>
+              <div class="v">Design decisions • Test results • Mistakes • Fixes</div>
+            </div>
+            <div class="kv">
+              <div class="k">Tools</div>
+              <div class="v">STM32 • C/C++ • Python • KiCad • Git</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="projects">
+          <h2>Projects</h2>
+          <div class="muted" style="margin-bottom:10px">Add or edit these cards in the HTML (search for <code>PROJECTS</code>).</div>
+          <div class="cards" id="projectsGrid"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section" id="notes">
+          <h2>Notes</h2>
+          <p class="muted" style="margin-top:-4px">
+            Quick capture + searchable library. Write in simple Markdown.
+          </p>
+
+          <div class="row">
+            <input id="search" placeholder="Search notes (title, tags, body)" />
+            <select id="filter">
+              <option value="all">All categories</option>
+              <option value="notes">General</option>
+              <option value="project">Project</option>
+              <option value="internship">Internship</option>
+            </select>
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="split">
+            <div>
+              <div class="row" style="justify-content:space-between">
+                <div style="font-weight:650">Library</div>
+                <button class="btn" id="newNote">New note</button>
+              </div>
+              <div class="list" id="notesList" style="margin-top:10px"></div>
+            </div>
+
+            <div>
+              <div style="font-weight:650">Editor</div>
+              <div class="small" style="margin:6px 0 10px">Use <code>#</code> for headings, <code>-</code> for lists, and <code>```</code> for code blocks.</div>
+              <div class="row">
+                <input id="title" placeholder="Title" />
+                <input id="tags" placeholder="Tags (comma-separated)" />
+              </div>
+              <textarea id="body" placeholder="Write here... (Markdown)"></textarea>
+              <div class="row" style="margin-top:10px">
+                <button class="btn" id="save">Save</button>
+                <button class="btn secondary" id="delete">Delete</button>
+                <button class="btn secondary" id="previewToggle">Preview</button>
+              </div>
+              <div id="previewWrap" style="margin-top:10px; display:none">
+                <div class="preview" id="preview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="internship">
+          <h2>Internship notes (starter)</h2>
+          <div class="muted" style="margin-bottom:10px">
+            Use “Internship” category notes for daily learnings, checklists, and definitions.
+          </div>
+          <div class="proj">
+            <div class="title">Onboarding checklist</div>
+            <div class="meta">SLDs, tag conventions, drawings, IEC basics, safety workflows</div>
+            <div class="tags">
+              <span class="tag">SLDs</span><span class="tag">IEC</span><span class="tag">Site</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" id="contact">
+          <h2>Contact</h2>
+          <div class="muted">Add your links below (LinkedIn, GitHub, email).</div>
+          <div class="row" style="margin-top:10px">
+            <a class="chip" href="#" aria-label="GitHub link">GitHub</a>
+            <a class="chip" href="#" aria-label="LinkedIn link">LinkedIn</a>
+            <a class="chip" href="#" aria-label="Email link">Email</a>
+          </div>
+        </div>
+
+        <footer>
+          <div>© <span id="year"></span> Mehak Khan</div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ----------------------------
+    // PROJECTS (edit these)
+    // ----------------------------
+    const PROJECTS = [
+      {
+        title: "STM32 Bare-Metal Bring-Up",
+        meta: "GPIO, clocks, SysTick, interrupts — documented fundamentals",
+        tags: ["STM32", "C", "Bare metal"],
+        linkText: "Repo",
+        linkHref: "#" // put your GitHub repo link
+      },
+      {
+        title: "Wearable Signal Chain (AFE + MCU)",
+        meta: "End-to-end: sensor → analog front-end → ADC → DSP → logging",
+        tags: ["AFE", "PCB", "DSP"],
+        linkText: "Notes",
+        linkHref: "#" // put a Notion/README link if you want
+      },
+      {
+        title: "RF Modulation Classifier (SNN)",
+        meta: "Dataset pipeline + training script + evaluation + learnings",
+        tags: ["RF", "Python", "SNN"],
+        linkText: "Write-up",
+        linkHref: "#"
+      },
+      {
+        title: "Internship Prep: SLD Reading",
+        meta: "Symbols, common topologies, protection concepts, quick reference",
+        tags: ["Power", "SLD", "IEC"],
+        linkText: "Cheatsheet",
+        linkHref: "#"
+      }
+    ];
+
+    const projectsGrid = document.getElementById('projectsGrid');
+    function renderProjects(){
+      projectsGrid.innerHTML = '';
+      for (const p of PROJECTS){
+        const el = document.createElement('div');
+        el.className = 'proj';
+        el.innerHTML = `
+          <div class="title">${escapeHtml(p.title)}</div>
+          <div class="meta">${escapeHtml(p.meta)}</div>
+          <div class="row" style="justify-content:space-between; align-items:center">
+            <div class="tags">${(p.tags||[]).map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join('')}</div>
+            <a class="chip" href="${p.linkHref}" target="_blank" rel="noreferrer">${escapeHtml(p.linkText||'Link')}</a>
+          </div>
+        `;
+        projectsGrid.appendChild(el);
+      }
     }
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
+    // ----------------------------
+    // NOTES (saved locally)
+    // ----------------------------
+    const LS_KEY = 'mehak_portfolio_notes_v1';
 
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
+    /** @typedef {{id:string, title:string, tags:string[], body:string, category:'notes'|'project'|'internship', updatedAt:number}} Note */
+
+    const els = {
+      list: document.getElementById('notesList'),
+      title: document.getElementById('title'),
+      tags: document.getElementById('tags'),
+      body: document.getElementById('body'),
+      save: document.getElementById('save'),
+      del: document.getElementById('delete'),
+      new: document.getElementById('newNote'),
+      search: document.getElementById('search'),
+      filter: document.getElementById('filter'),
+      previewToggle: document.getElementById('previewToggle'),
+      previewWrap: document.getElementById('previewWrap'),
+      preview: document.getElementById('preview'),
+      btnDownload: document.getElementById('btnDownload'),
+      btnUpload: document.getElementById('btnUpload'),
+      fileInput: document.getElementById('fileInput')
     };
 
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
+    let notes = loadNotes();
+    let activeId = null;
+
+    if (notes.length === 0){
+      notes = seedNotes();
+      saveNotes();
+    }
+
+    function seedNotes(){
+      const now = Date.now();
+      return [
+        {
+          id: cryptoId(),
+          title: 'How I take hardware notes',
+          tags: ['process', 'docs'],
+          body: "# Hardware notes\n\n- Start with *what the system does*\n- Then draw the signal/power path\n- Record assumptions\n- Record tests + results\n\n```\nGiven: ...\nHypothesis: ...\nTest: ...\nResult: ...\nNext: ...\n```",
+          category: 'notes',
+          updatedAt: now
+        },
+        {
+          id: cryptoId(),
+          title: 'SLD quick terms',
+          tags: ['sld', 'power'],
+          body: "# SLD quick terms\n\n- **Busbar**: common node for distribution\n- **Breaker**: protection + switching\n- **Isolator**: visible isolation (no load breaking)\n\nAdd your drawings + examples here.",
+          category: 'internship',
+          updatedAt: now - 1000
         }
-    })
+      ];
+    }
 
-</script>
+    function loadNotes(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+        return parsed;
+      }catch{ return []; }
+    }
+
+    function saveNotes(){
+      localStorage.setItem(LS_KEY, JSON.stringify(notes));
+    }
+
+    function cryptoId(){
+      if (window.crypto && crypto.getRandomValues){
+        const a = new Uint32Array(4);
+        crypto.getRandomValues(a);
+        return Array.from(a).map(n=>n.toString(16)).join('-');
+      }
+      return String(Date.now()) + '-' + Math.random().toString(16).slice(2);
+    }
+
+    function fmtTime(ms){
+      const d = new Date(ms);
+      const y = d.getFullYear();
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#39;');
+    }
+
+    function getFilteredNotes(){
+      const q = (els.search.value || '').trim().toLowerCase();
+      const cat = els.filter.value;
+      return notes
+        .slice()
+        .sort((a,b)=>b.updatedAt - a.updatedAt)
+        .filter(n => (cat === 'all' ? true : n.category === cat))
+        .filter(n => {
+          if (!q) return true;
+          const hay = `${n.title} ${(n.tags||[]).join(' ')} ${n.body}`.toLowerCase();
+          return hay.includes(q);
+        });
+    }
+
+    function renderList(){
+      const list = getFilteredNotes();
+      els.list.innerHTML = '';
+      if (list.length === 0){
+        const empty = document.createElement('div');
+        empty.className = 'muted';
+        empty.textContent = 'No notes yet.';
+        els.list.appendChild(empty);
+        return;
+      }
+
+      for (const n of list){
+        const item = document.createElement('div');
+        item.className = 'item';
+        const catLabel = n.category === 'notes' ? 'General' : (n.category === 'project' ? 'Project' : 'Internship');
+        item.innerHTML = `
+          <div class="left">
+            <div class="t">${escapeHtml(n.title || 'Untitled')}</div>
+            <div class="d">${escapeHtml(catLabel)} • Updated ${fmtTime(n.updatedAt)} • ${(n.tags||[]).slice(0,4).map(t=>'#'+t).join(' ')}</div>
+          </div>
+          <div class="actions">
+            <button class="btn secondary" data-open="${n.id}">Open</button>
+          </div>
+        `;
+        els.list.appendChild(item);
+      }
+
+      els.list.querySelectorAll('[data-open]').forEach(btn => {
+        btn.addEventListener('click', () => openNote(btn.getAttribute('data-open')));
+      });
+    }
+
+    function openNote(id){
+      const n = notes.find(x => x.id === id);
+      if (!n) return;
+      activeId = id;
+      els.title.value = n.title || '';
+      els.tags.value = (n.tags || []).join(', ');
+      els.body.value = n.body || '';
+      els.filter.value = n.category || 'notes';
+      els.previewWrap.style.display = 'none';
+    }
+
+    function upsertNote(){
+      const title = (els.title.value || '').trim() || 'Untitled';
+      const tags = (els.tags.value || '')
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(s => s.toLowerCase());
+      const body = els.body.value || '';
+      const category = (els.filter.value === 'all') ? 'notes' : els.filter.value;
+
+      const now = Date.now();
+      if (!activeId){
+        const n = { id: cryptoId(), title, tags, body, category, updatedAt: now };
+        notes.unshift(n);
+        activeId = n.id;
+      } else {
+        const idx = notes.findIndex(x => x.id === activeId);
+        if (idx !== -1){
+          notes[idx] = { ...notes[idx], title, tags, body, category, updatedAt: now };
+        }
+      }
+      saveNotes();
+      renderList();
+    }
+
+    function deleteNote(){
+      if (!activeId) return;
+      notes = notes.filter(n => n.id !== activeId);
+      activeId = null;
+      els.title.value = '';
+      els.tags.value = '';
+      els.body.value = '';
+      saveNotes();
+      renderList();
+      els.previewWrap.style.display = 'none';
+    }
+
+    // Minimal Markdown to HTML (headings, lists, code blocks, inline code)
+    function mdToHtml(md){
+      const esc = (s) => escapeHtml(s);
+      const lines = String(md || '').replace(/\r\n/g,'\n').split('\n');
+      let html = '';
+      let inCode = false;
+      let codeBuf = [];
+      let inList = false;
+
+      const flushList = () => {
+        if (inList){ html += '</ul>'; inList = false; }
+      };
+      const flushCode = () => {
+        if (inCode){
+          html += `<pre><code>${esc(codeBuf.join('\n'))}</code></pre>`;
+          inCode = false;
+          codeBuf = [];
+        }
+      };
+
+      for (const line of lines){
+        if (line.trim().startsWith('```')){
+          if (!inCode){ flushList(); inCode = true; }
+          else { flushCode(); }
+          continue;
+        }
+        if (inCode){ codeBuf.push(line); continue; }
+
+        // headings
+        const h = line.match(/^(#{1,3})\s+(.*)$/);
+        if (h){
+          flushList();
+          const level = h[1].length;
+          html += `<h${level}>${esc(h[2])}</h${level}>`;
+          continue;
+        }
+
+        // list items
+        const li = line.match(/^\s*-\s+(.*)$/);
+        if (li){
+          if (!inList){ html += '<ul>'; inList = true; }
+          html += `<li>${inlineMd(esc(li[1]))}</li>`;
+          continue;
+        } else {
+          flushList();
+        }
+
+        // paragraph
+        if (line.trim().length === 0){
+          html += '<div style="height:8px"></div>';
+        } else {
+          html += `<p>${inlineMd(esc(line))}</p>`;
+        }
+      }
+      flushList();
+      flushCode();
+      return html;
+    }
+
+    function inlineMd(escaped){
+      // inline code: `code`
+      let s = String(escaped);
+      s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+      // bold: **text**
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      // italic: *text*
+      s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      return s;
+    }
+
+    function togglePreview(){
+      const showing = els.previewWrap.style.display !== 'none';
+      if (showing){
+        els.previewWrap.style.display = 'none';
+        return;
+      }
+      els.preview.innerHTML = mdToHtml(els.body.value);
+      els.previewWrap.style.display = 'block';
+    }
+
+    // Import / Export
+    function downloadNotes(){
+      const payload = { exportedAt: new Date().toISOString(), notes };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mehak-notes-export.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function uploadNotes(file){
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const parsed = JSON.parse(String(reader.result || '{}'));
+          const imported = Array.isArray(parsed.notes) ? parsed.notes : (Array.isArray(parsed) ? parsed : []);
+          if (!Array.isArray(imported)) throw new Error('Invalid');
+
+          // Basic normalization
+          const cleaned = imported
+            .filter(Boolean)
+            .map(n => ({
+              id: String(n.id || cryptoId()),
+              title: String(n.title || 'Untitled'),
+              tags: Array.isArray(n.tags) ? n.tags.map(x=>String(x).toLowerCase()) : [],
+              body: String(n.body || ''),
+              category: (n.category === 'project' || n.category === 'internship' || n.category === 'notes') ? n.category : 'notes',
+              updatedAt: typeof n.updatedAt === 'number' ? n.updatedAt : Date.now()
+            }));
+
+          notes = cleaned;
+          saveNotes();
+          activeId = null;
+          els.title.value = '';
+          els.tags.value = '';
+          els.body.value = '';
+          renderList();
+          alert('Imported notes successfully.');
+        } catch (e){
+          alert('Could not import that file. Make sure it is a valid notes export.');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // Wire up
+    document.getElementById('year').textContent = String(new Date().getFullYear());
+    renderProjects();
+    renderList();
+
+    els.new.addEventListener('click', () => {
+      activeId = null;
+      els.title.value = '';
+      els.tags.value = '';
+      els.body.value = '';
+      els.filter.value = 'notes';
+      els.previewWrap.style.display = 'none';
+      els.title.focus();
+    });
+
+    els.save.addEventListener('click', upsertNote);
+    els.del.addEventListener('click', deleteNote);
+    els.search.addEventListener('input', renderList);
+    els.filter.addEventListener('change', renderList);
+    els.previewToggle.addEventListener('click', togglePreview);
+
+    els.btnDownload.addEventListener('click', downloadNotes);
+    els.btnUpload.addEventListener('click', () => els.fileInput.click());
+    els.fileInput.addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) uploadNotes(file);
+      e.target.value = '';
+    });
+
+    // Auto-save safety: Ctrl/Cmd+S
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's'){
+        e.preventDefault();
+        upsertNote();
+      }
+    });
+  </script>
 </body>
-
 </html>
