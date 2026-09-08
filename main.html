@@ -1,0 +1,26 @@
+# Mehak Khan — Electrical Engineering Portfolio
+
+Third-year Electrical Engineering (BASc Honours), University of Waterloo.
+Focus: analog/mixed-signal IC design.
+
+---
+
+## Featured Projects
+
+### [Pipelined Matrix-Vector Multiplication Engine (SystemVerilog / FPGA)](./mvm-engine-portfolio.md)
+Digital hardware accelerator built for ECE 327 — an 8-lane pipelined MVM engine (the same class of datapath used in accelerators like Microsoft's BrainWave), scaled to 64 output lanes and timing-closed at ~500–600MHz on a Kria KV260 FPGA. Includes the DSP48E2 internal-pipeline-register optimization technique first developed on a companion tanh-circuit lab (574MHz).
+
+### [PDK-Agnostic Subthreshold Bandgap Voltage Reference (Analog IC Tapeout)](./uwasic-bandgap-portfolio.md)
+*Status: active — final PSRR tuning and Verilog-A model in progress.*
+A MOSFET-only (no BJT) subthreshold bandgap reference designed for a UWASIC Tiny Tapeout submission, built on real SKY130 device characterization rather than reused textbook constants. Measured 89 ppm/°C temperature coefficient and 65dB low-frequency PSRR.
+
+### [Neuromorphic Wearable Stress Detector — SNN + Analog In-Memory Compute (Phase 1)](./cptsd-wearable-portfolio.md)
+Phase 1 of a 12-week hybrid hardware/software roadmap: a spiking neural network trained on real WESAD physiological data, with its trained weights physically mapped onto and validated against a simulated analog synapse cell in SKY130 — inspired by IBM's HERMES and NorthPole in-memory-compute accelerators.
+
+### [WATOLINK -]
+---
+
+## Coming Soon
+- UWASIC bandgap reference — final PSRR results, Verilog-A model, hand-derivation writeup
+- ECE 373 (Microwave Circuits) — HF PCB design
+- ECE 320 (Computer Architecture) project
