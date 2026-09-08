@@ -38,7 +38,7 @@ A MOSFET-only (no BJT) subthreshold bandgap reference for a UWASIC Tiny Tapeout 
 ### [Neuromorphic Wearable Stress Detector — SNN + Analog In-Memory Compute (Phase 1)](./cptsd-wearable-portfolio.md)
 A spiking neural network trained on real WESAD physiological data, with trained weights physically mapped onto and validated against a simulated analog synapse cell in SKY130 — inspired by IBM's HERMES and NorthPole in-memory-compute accelerators.
 
-### [Watolink — Main PCB for a Wearable EMG-Controlled Prosthetic Hand](./watolink-portfolio.md)
+### [Watolink — Main PCB for a Wearable EMG-Controlled Prosthetic Hand](./watolink.md)
 *Active — board fabrication and impedance-mismatch fix in progress.*
 2-layer main PCB (power management, ESP32-S3, sensor ADCs, servo control) for a wearable EMG biosignal control system, as Hardware Lead.
 
