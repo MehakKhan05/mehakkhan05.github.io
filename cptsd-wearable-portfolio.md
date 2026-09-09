@@ -130,7 +130,7 @@ Instead, Phase 1 asks:
 
 The Phase 1 architecture is:
 
-![Phase 1 architecture](phase1_architecture.png)
+![Phase 1 architecture](figures/phase1_architecture.png)
 
 *Figure 2 — Phase 1 hardware/software co-design flow. Physiological data is converted into features and spikes, processed by a quantized SNN, and trained weights are mapped onto measured SKY130 transistor conductances for analog multiplication.*
 
@@ -215,7 +215,7 @@ rather than raw ECG or raw skin-conductance amplitude.
 
 ---
 
-![Physiological preprocessing](physiology_pipeline.png)
+![Physiological preprocessing](figures/physiology_pipeline.png)
 
 *Figure 3 — Physiological preprocessing pipeline. ECG is converted into R-peak-derived heart rate while EDA is decomposed to isolate the faster phasic component before spike encoding.*
 
@@ -263,7 +263,7 @@ This creates a direct hardware requirement:
 
 ---
 
-![SNN training results](snn_training_results.png)
+![SNN training results](figures/snn_training_results.png)
 
 *Figure 4 — SNN training and validation behavior. Firing-rate telemetry was used alongside loss and accuracy to diagnose both dead-neuron and saturated-neuron regimes during model development.*
 
