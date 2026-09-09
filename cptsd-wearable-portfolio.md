@@ -6,7 +6,7 @@
 **Long-Term Application:** A discreet wearable intended to detect sustained physiological stress and trigger a heartbeat-like haptic cue at the wrist  
 **Tools:** Python, PyTorch, snnTorch, NeuroKit2, Xschem, ngspice, SKY130 PDK  
 **Architecture Inspiration:** Neuromorphic and low-data-movement accelerators including IBM HERMES and NorthPole  
-**Repository:** [Source code and simulations](YOUR_REPOSITORY_URL)
+**Repository:** [Source code and simulations](https://github.com/MehakKhan05/CPTSD-Wearable)
 
 > **I am developing the inference architecture for a closed-loop wearable that detects sustained physiological stress locally and responds with a private heartbeat-like haptic stimulus at the wrist. Phase 1 focuses on the neuromorphic inference engine: physiological feature extraction, a 4-bit quantized spiking neural network, and mapping its real trained weights onto physically characterized SKY130 analog conductance cells.**
 
