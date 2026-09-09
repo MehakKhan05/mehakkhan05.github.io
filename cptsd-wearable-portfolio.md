@@ -37,7 +37,7 @@ The final wearable is planned as a closed-loop system with three major stages:
 2. Neuromorphic stress inference
 3. Haptic response
 
-![Full wearable architecture](wearable_system_architecture.png)
+![Full wearable architecture](figures/wearable_system_architecture.png)
 
 *Figure 1 — Proposed end-to-end architecture. ECG/PPG and EDA measurements are converted into physiological features and spike representations, processed by a low-power neuromorphic inference engine, and used to trigger a heartbeat-like haptic pattern when sustained stress is detected.*
 
