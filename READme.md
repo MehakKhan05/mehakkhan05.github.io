@@ -2,7 +2,7 @@
 
 Third-year Electrical Engineering (BASc Honours) at the University of Waterloo, graduating April 2028. President's Scholarship of Distinction. Focused on analog/mixed-signal IC design.
 
-[LinkedIn](#) · [Email](#) · [Resume](#)
+[LinkedIn](https://www.linkedin.com/in/mehakkhan05/) · [Email](mailto:m225khan@uwaterloo.ca) · [Resume](assets/Resume.pdf)
 
 ---
 
