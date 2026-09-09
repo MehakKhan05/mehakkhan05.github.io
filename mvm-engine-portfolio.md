@@ -8,7 +8,7 @@
 **Tools:** SystemVerilog, AMD Vivado/Vitis, XSim  
 **Core Modules:** `mvm.sv`, `dot8.sv`, `accum.sv`, `ctrl.sv`, SRAM memory blocks  
 **Target:** Functional matrix-vector multiplication with a clock-frequency target above 350 MHz  
-**Repository:** [ECE 327 Group 44 Lab Repository](https://git.uwaterloo.ca/ece327-s26/group44-lab)
+**Repository:** [FPGA MVM Engine](https://github.com/MehakKhan05/fpga-mvm-engine)
 
 > **Designed and implemented a parameterized FPGA matrix-vector multiplication accelerator built from parallel 8-element dot-product engines, per-lane accumulators, SRAM-backed matrix/vector storage, and an FSM controller. The main challenge was not only making the arithmetic correct, but keeping memory reads, pipeline-valid signals, and accumulation boundaries aligned across a deeply pipelined multi-lane datapath.**
 
