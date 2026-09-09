@@ -28,14 +28,14 @@ Currently targeting Winter 2027 co-ops in analog/mixed-signal design and verific
 
 ## Featured Projects
 
-### [Pipelined Matrix-Vector Multiplication Engine (SystemVerilog / FPGA)](./ece327-mvm-engine-portfolio.md)
+### [Pipelined Matrix-Vector Multiplication Engine (SystemVerilog / FPGA)](./mvm-engine-portfolio.md)
 An 8-lane pipelined MVM engine — the same class of datapath used in accelerators like Microsoft's BrainWave — scaled to 64 output lanes and timing-closed at ~500–600MHz on a Kria KV260 FPGA.
 
 ### [PDK-Agnostic Subthreshold Bandgap Voltage Reference (Analog IC Tapeout)](./uwasic-bandgap-portfolio.md)
 *Active — final PSRR tuning and Verilog-A model in progress.*
 A MOSFET-only (no BJT) subthreshold bandgap reference for a UWASIC Tiny Tapeout submission, built on real SKY130 device characterization. Measured 89 ppm/°C temperature coefficient and 65dB low-frequency PSRR.
 
-### [Neuromorphic Wearable Stress Detector — SNN + Analog In-Memory Compute (Phase 1)](./cptsd-wearable-portfolio.md)
+### [Neuromorphic Stress-Responsive Wearable (Phase 1)](./cptsd-wearable-portfolio.md)
 A spiking neural network trained on real WESAD physiological data, with trained weights physically mapped onto and validated against a simulated analog synapse cell in SKY130 — inspired by IBM's HERMES and NorthPole in-memory-compute accelerators.
 
 ### [Watolink — Main PCB for a Wearable EMG-Controlled Prosthetic Hand](./watolink.md)

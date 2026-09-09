@@ -1052,6 +1052,6 @@ The project source contains the main RTL blocks for:
 - SRAM interfaces
 - Simulation testbenches
 
-**Repository:** [mvm-engine](https://git.uwaterloo.ca/ece327-s26/group44-lab)
+**Repository:** [fpga-mvm-engine](https://github.com/MehakKhan05/fpga-mvm-engine)
 
 > **Note:** The course GitLab repository may require University of Waterloo access. A public portfolio mirror can be added later if external source-code access is desired.
