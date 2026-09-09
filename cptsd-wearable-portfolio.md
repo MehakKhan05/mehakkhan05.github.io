@@ -4,10 +4,11 @@
 **Project:** Neuromorphic stress-responsive wearable for physiological stress monitoring  
 **Current Phase:** Phase 1 — quantized SNN + SKY130 analog-compute proof of concept  
 **Long-Term Application:** A discreet wearable intended to detect sustained physiological stress and trigger a heartbeat-like haptic cue at the wrist  
-**Tools:** Python, snnTorch, NeuroKit2, Xschem, ngspice, SKY130 PDK  
+**Tools:** Python, PyTorch, snnTorch, NeuroKit2, Xschem, ngspice, SKY130 PDK  
 **Architecture Inspiration:** Neuromorphic and low-data-movement accelerators including IBM HERMES and NorthPole  
+**Repository:** [Source code and simulations](YOUR_REPOSITORY_URL)
 
-> **I am developing the inference architecture for a closed-loop wearable that detects sustained physiological stress locally and responds with a private heartbeat-like haptic stimulus at the wrist. Phase 1 focuses on the low-power neuromorphic inference engine: physiological feature extraction, a quantized spiking neural network, and mapping trained weights onto physically characterized SKY130 analog conductance cells.**
+> **I am developing the inference architecture for a closed-loop wearable that detects sustained physiological stress locally and responds with a private heartbeat-like haptic stimulus at the wrist. Phase 1 focuses on the neuromorphic inference engine: physiological feature extraction, a 4-bit quantized spiking neural network, and mapping its real trained weights onto physically characterized SKY130 analog conductance cells.**
 
 ---
 
@@ -15,124 +16,114 @@
 
 The long-term motivation for this project is a discreet wearable intended for children exposed to chronic or traumatic stress, including displaced and refugee children.
 
-Periods of acute physiological arousal may not always be communicated verbally. A wearable capable of continuously observing physiological signals could potentially detect sustained changes associated with stress and provide a private tactile response without requiring the user to interact with a phone or cloud service.
+Periods of acute physiological arousal may not always be communicated verbally. A continuously sensing wearable could potentially identify sustained physiological changes associated with stress and provide a private tactile cue without requiring the user to interact with a phone or cloud service.
 
-The proposed intervention is a **gentle heartbeat-like haptic pattern at the wrist**.
+The proposed response is a **gentle heartbeat-like haptic pattern at the wrist**.
 
-The intended system is therefore not only a stress detector:
+The intended system is therefore:
 
 **Physiology → local inference → sustained stress detection → heartbeat-like haptic feedback**
 
-The haptic response is currently a proposed intervention and has not been clinically validated as a treatment for CPTSD or stress.
-
-Likewise, the current system detects physiological stress patterns rather than diagnosing CPTSD.
+The current system detects physiological stress patterns rather than diagnosing CPTSD, and the proposed haptic response has not been clinically validated as a treatment for stress or CPTSD.
 
 ---
 
 ## Full System Architecture
 
-The final wearable is planned as a closed-loop system with three major stages:
+The final wearable is planned as a closed-loop system built around:
 
 1. Physiological sensing
 2. Neuromorphic stress inference
-3. Haptic response
+3. Decision logic
+4. Haptic response
+5. Continued physiological reassessment
 
 ![Full wearable architecture](figures/wearable_system_architecture.png)
 
-*Figure 1 — Proposed end-to-end architecture. ECG/PPG and EDA measurements are converted into physiological features and spike representations, processed by a low-power neuromorphic inference engine, and used to trigger a heartbeat-like haptic pattern when sustained stress is detected.*
+*Figure 1 — Proposed end-to-end architecture of the stress-responsive wearable. PPG/ECG and EDA sensing feed a local neuromorphic inference path, while sustained elevated stress confidence triggers a heartbeat-like haptic response. Continued sensing forms the basis of the eventual closed-loop system.*
 
 The intended signal path is:
 
-**ECG / PPG + EDA**  
+**PPG / ECG + EDA**  
 ↓  
-**Analog front end + ADC**  
+**Sensor AFEs + ADC acquisition**  
 ↓  
-**Heart-rate / HRV + phasic EDA features**  
+**Physiological feature extraction**  
 ↓  
 **Spike encoding**  
 ↓  
 **Quantized spiking neural network**  
 ↓  
-**Analog / neuromorphic vector-matrix multiplication**  
+**Analog VMM / conductance-based compute**  
 ↓  
-**Stress-state decision**  
+**Stress confidence / classification**  
 ↓  
-**Persistence / confidence logic**  
+**Persistence + decision logic**  
 ↓  
-**Haptic waveform generator**  
+**Heartbeat-like haptic waveform**  
 ↓  
 **Wrist-mounted actuator**
+
+The final architecture also includes a Li-Po battery, charger / PMIC, MCU-based control, and development-only BLE / USB logging.
 
 ---
 
 ## Why Neuromorphic Computing?
 
-A continuously operating wearable has substantially different constraints from a desktop machine or cloud-based ML system.
+A continuously operating wearable has different constraints from a desktop or cloud-based inference system.
 
-The eventual system must prioritize:
+The eventual device must prioritize:
 
-- Low power consumption
+- Low power
 - Continuous operation
 - Small battery capacity
 - Local inference
 - Low latency
 - Privacy
 - Sparse computation
-- Minimal data movement
+- Reduced data movement
 
-Conventional neural-network inference repeatedly moves weights and activations between memory and arithmetic units.
+This project investigates two complementary approaches.
 
-Neuromorphic and in-memory-compute architectures attempt to reduce this cost by placing computation closer to where information is represented.
+### Spiking Neural Network
 
-This project investigates two complementary ideas.
+The classifier uses leaky-integrate-and-fire neurons to represent information through temporally evolving spike activity.
 
-### Spiking Neural Networks
-
-An SNN represents information through discrete spike events and maintains temporal state using neuron dynamics.
-
-Sparse spike activity creates the possibility of performing computation only when physiologically relevant activity occurs.
+Sparse spiking creates the possibility of performing computation only when meaningful activity is present rather than continuously executing dense arithmetic.
 
 ### Analog Conductance-Based Compute
 
-A neural-network multiplication can be represented electrically using:
+A multiplication can be represented electrically as:
 
 **I = GV**
 
 where:
 
 - **V** represents an input
-- **G** represents a weight
+- **G** represents a synaptic weight
 - **I** represents the multiplication result
 
-Multiple conductances connected to a common column can naturally sum currents through Kirchhoff's current law:
+Multiple conductance cells sharing a column can naturally sum current:
 
 **I<sub>out</sub> = Σ G<sub>i</sub>V<sub>i</sub>**
 
-This is the physical basis of analog vector-matrix multiplication.
+This provides the physical basis for analog vector-matrix multiplication.
 
 ---
 
-## Phase 1 Scope
+# Phase 1 — Neuromorphic Inference Proof of Concept
 
-The complete wearable is intentionally divided into phases.
+Phase 1 asks:
 
-### Phase 1 — Neuromorphic Inference Proof of Concept
+> **Can a physiological stress classifier be trained in software and then map its real quantized weights onto a physically characterized CMOS analog-compute primitive?**
 
-The current phase demonstrates the bridge between:
+The current hardware/software path is:
 
-**physiological data → SNN → quantized weight → physical conductance → analog MAC**
-
-The goal is not yet to fabricate a complete analog accelerator.
-
-Instead, Phase 1 asks:
-
-> Can a physiological stress classifier be trained in software and then map its learned numerical weights onto a physically characterized CMOS analog-compute primitive?
-
-The Phase 1 architecture is:
+**WESAD physiological data → feature extraction → spike encoding → 4-bit SNN → trained weights → measured SKY130 conductance → required VGS → analog current summation**
 
 ![Phase 1 architecture](figures/phase1_architecture.png)
 
-*Figure 2 — Phase 1 hardware/software co-design flow. Physiological data is converted into features and spikes, processed by a quantized SNN, and trained weights are mapped onto measured SKY130 transistor conductances for analog multiplication.*
+*Figure 2 — Phase 1 hardware/software co-design architecture. Real WESAD physiological data is processed into compact features, rate-encoded into spikes, classified by a 4-bit quantized SNN, and mapped from trained numerical weights to measured SKY130 conductances and transistor gate biases.*
 
 ---
 
@@ -142,112 +133,134 @@ The Phase 1 architecture is:
 
 Initial development uses the **WESAD physiological stress dataset**.
 
-ECG and EDA signals are used as the physiological inputs for the current proof of concept.
+The current proof of concept uses chest-worn ECG and EDA signals and performs binary classification between:
 
-The present implementation uses a subset of subjects during development; expanding to subject-independent evaluation across the full dataset is part of the next stage.
+- Baseline
+- Stress
+
+The current portfolio result uses **S2 and S3** as a lightweight Phase 1 development experiment.
 
 ---
 
-## Initial Attempt — Raw Physiological Amplitudes
+## Initial SNN Failure Modes
 
-The first implementation directly encoded raw ECG and EDA amplitudes into spike rates.
+Early versions of the network used direct rate encoding of physiological traces.
 
-This exposed two distinct SNN failure modes.
+This exposed several useful failure modes during development.
 
 ### Dead Network
 
-With some combinations of initialization and LIF threshold, the neurons produced essentially no spikes.
+With some combinations of initialization and LIF threshold, the network produced almost no useful spike activity.
 
-The binary classification loss remained close to:
+The loss remained close to:
 
 **ln(2) ≈ 0.693**
 
-indicating that the network was behaving approximately like a random classifier.
+which is characteristic of an approximately random binary classifier.
 
 ### Saturated Network
 
-Other parameter combinations produced the opposite failure mode: neurons fired almost continuously.
+Other parameter combinations produced excessive firing, reducing the useful temporal selectivity of the LIF neurons.
 
-This removed useful temporal selectivity and again resulted in poor classification.
+### Majority-Class Collapse
 
-Rather than adjusting parameters blindly, I instrumented the model to monitor **firing rates throughout training**.
+A later network remained electrically active but predicted almost every validation example as baseline.
 
-This made it possible to distinguish:
+Raw accuracy appeared reasonable because baseline was the majority class, but:
 
-- No neuronal activity
-- Useful sparse activity
-- Saturated activity
+- Balanced accuracy remained approximately 50%
+- Stress recall was 0%
+- Stress F1 was 0%
 
-directly.
+This demonstrated why raw accuracy alone was not a sufficient metric.
+
+I therefore added:
+
+- Firing-rate telemetry
+- Balanced accuracy
+- Stress precision
+- Stress recall
+- Stress F1
+- Confusion-matrix analysis
+
+and changed checkpoint selection to prioritize **balanced accuracy rather than raw accuracy**.
 
 ---
 
-## Physiologically Informed Features
+## Physiologically Informed Feature Extraction
 
-Raw ECG amplitude itself is not necessarily the most informative representation of physiological stress.
+The final Phase 1 development model does not feed raw ECG and EDA amplitudes directly into the SNN.
 
-The preprocessing pipeline was therefore changed to extract more meaningful physiological variables.
+Instead, NeuroKit2 is used to derive more meaningful physiological signals.
 
-### ECG
+### ECG Processing
 
-R-peaks are detected from the ECG signal.
+The continuous ECG recording is processed to identify cardiac activity and derive heart rate.
 
-Successive R-peaks produce RR intervals:
+The resulting heart-rate signal is summarized over each 10-second window.
 
-**RR<sub>i</sub> = t<sub>R,i+1</sub> − t<sub>R,i</sub>**
-
-These intervals are converted into instantaneous heart rate:
-
-**HR = 60 / RR**
-
-### EDA
+### EDA Processing
 
 EDA is decomposed into tonic and phasic components.
 
-The **phasic component** captures faster sympathetic electrodermal responses and is therefore used as the primary EDA feature in the current model.
+The **phasic component** is used because it captures faster electrodermal responses associated with sympathetic activity.
 
-The current neural-network input is therefore based on:
+### Six Window-Level Features
 
-- Instantaneous heart rate
-- Phasic EDA
+Each 10-second physiological window is reduced to six features:
 
-rather than raw ECG or raw skin-conductance amplitude.
+- Mean heart rate
+- Heart-rate standard deviation
+- Heart-rate range
+- Mean phasic EDA
+- Phasic EDA standard deviation
+- Maximum phasic EDA
 
----
+Training-set statistics are used to normalize the features before spike encoding.
 
-![Physiological preprocessing](figures/physiology_pipeline.png)
-
-*Figure 3 — Physiological preprocessing pipeline. ECG is converted into R-peak-derived heart rate while EDA is decomposed to isolate the faster phasic component before spike encoding.*
+This change dramatically improved class separability compared with the earlier raw-signal representation.
 
 ---
 
 # Spiking Neural Network
 
-The classifier is implemented using **snnTorch** and leaky-integrate-and-fire neurons.
+The classifier is implemented using **snnTorch**.
 
-A simplified LIF neuron evolves according to accumulated input and membrane leakage until its membrane potential crosses a threshold.
+The current architecture contains:
+
+**6 physiological feature inputs**  
+↓  
+**4-bit quantized fully connected layer**  
+↓  
+**24 LIF hidden neurons**  
+↓  
+**4-bit quantized readout layer**  
+↓  
+**Baseline / Stress classification**
+
+The LIF hidden layer evolves according to accumulated current and membrane leakage.
 
 Conceptually:
 
 **U[t+1] = βU[t] + I[t]**
 
-When:
+When the membrane crosses threshold:
 
 **U[t] ≥ U<sub>th</sub>**
 
-the neuron emits a spike and resets according to the selected neuron model.
+the neuron emits a spike.
 
-This makes the network inherently temporal rather than treating each physiological sample as an independent static observation.
+The six normalized physiological features are converted into spike trains using rate encoding.
 
 ---
 
-## Quantization-Aware Training
+## 4-Bit Quantization-Aware Training
 
-The eventual analog hardware cannot represent arbitrary floating-point neural-network weights.
+The analog hardware cannot reproduce arbitrary floating-point weights exactly.
 
-The SNN is therefore trained with **fake quantization**.
+The linear layers are therefore trained using **fake quantization**.
 
-Weights are constrained during forward propagation to discrete levels while a straight-through estimator allows gradients to continue flowing during backpropagation.
+During the forward pass, weights are constrained to discrete values while a straight-through estimator allows gradients to propagate during training.
 
 The current target is:
 
@@ -255,255 +268,273 @@ The current target is:
 
 corresponding to:
 
-**2<sup>4</sup> = 16 possible weight levels**
+**2<sup>4</sup> = 16 possible quantized levels**
 
-This creates a direct hardware requirement:
+The exported first-layer weight matrix has shape:
 
-> The analog synapse architecture should eventually support approximately 16 distinguishable effective conductance states if the 4-bit model is to be reproduced physically.
+**24 × 6**
+
+corresponding to 24 hidden neurons and six physiological feature inputs.
 
 ---
 
+## Preliminary SNN Results
+
+The revised physiological-feature representation produced a substantial improvement over the earlier majority-class-collapse experiments.
+
+The best checkpoint achieved:
+
+- **Validation accuracy: 82.4%**
+- **Balanced accuracy: 82.3%**
+- **Stress precision: 71.9%**
+- **Stress recall: 82.0%**
+- **Stress F1: 76.6%**
+- **Majority-class baseline: 64.8%**
+
+The best-checkpoint confusion matrix contained:
+
+- 76 correctly classified baseline windows
+- 41 correctly classified stress windows
+- 16 baseline windows incorrectly classified as stress
+- 9 stress windows incorrectly classified as baseline
+
 ![SNN training results](figures/snn_training_results.png)
 
-*Figure 4 — SNN training and validation behavior. Firing-rate telemetry was used alongside loss and accuracy to diagnose both dead-neuron and saturated-neuron regimes during model development.*
+*Figure 3 — Preliminary validation performance of the 4-bit quantized SNN. Balanced accuracy and stress-class F1 improve during training while overall validation accuracy rises above the 64.8% majority-class baseline.*
+
+![SNN firing-rate telemetry](figures/snn_firing_rate.png)
+
+*Figure 4 — LIF hidden-layer firing-rate telemetry during training and validation. Spike monitoring was used to distinguish actual classifier-learning problems from dead-neuron and saturated-neuron failure modes.*
+
+![SNN confusion matrix](figures/snn_confusion_matrix.png)
+
+*Figure 5 — Best-checkpoint confusion matrix. Unlike the earlier majority-class-collapse model, the revised feature representation produces meaningful discrimination of both baseline and stress windows.*
+
+> **Validation note:** This is a preliminary development result using a stratified random-window split across two WESAD subjects. Windows overlap by 50%, so adjacent windows may contain correlated samples across the train/validation partitions. The result should therefore not be interpreted as subject-independent generalization performance. Subject-held-out / leave-one-subject-out evaluation is planned.
 
 ---
 
 # Analog Compute Primitive
 
-## Why Start With One Synapse?
+## From Neural Weight to Physical Conductance
 
-Real analog in-memory-compute accelerators can contain very large crossbar arrays.
+Phase 1 begins with the smallest useful analog-compute primitive:
 
-Reproducing an architecture of that scale is not meaningful for the first stage of this project.
+> **One voltage-controlled conductance representing one neural-network weight magnitude.**
 
-Instead, Phase 1 begins with the smallest useful computational primitive:
+The cell uses a SKY130 NMOS transistor biased in an approximately linear / triode operating region.
 
-> **One voltage-controlled conductance representing one neural-network weight**
-
-The primitive is implemented using a SKY130 NMOS transistor biased in its approximately linear / triode operating region.
-
-For sufficiently small **V<sub>DS</sub>**, the device can approximately behave as a voltage-controlled conductance:
+For sufficiently small drain-source voltage:
 
 **I<sub>D</sub> ≈ G(V<sub>GS</sub>)V<sub>DS</sub>**
 
-The input voltage performs the multiplication while the transistor conductance represents the weight magnitude.
+The drain-source voltage acts as the read/input voltage while gate voltage controls the effective channel conductance.
 
 ---
 
-## Important Limitation — Weight Storage
+## Important Limitation — This Is Not Yet Nonvolatile Memory
 
-The current cell is an **AIMC-inspired analog conductance primitive**, not yet a nonvolatile memory cell.
+The present transistor cell is an **AIMC-inspired analog conductance primitive**, not a PCM/RRAM memory device.
 
-The neural-network weight is represented through the externally applied gate voltage:
+The weight is represented through the applied gate voltage:
 
 **w → G → V<sub>GS</sub>**
 
 The NMOS itself does not permanently store the trained weight.
 
-A scalable implementation would require an additional method of retaining or generating each weight state, such as:
+A scalable implementation would require a mechanism for retaining or generating these gate biases, such as:
 
 - Nonvolatile resistive memory
 - Floating-gate storage
-- Local sample-and-hold
-- Digitally stored weights with compact DAC generation
+- Local analog storage
+- Digitally stored weights with DAC generation
 
-This distinction is important when comparing the proof of concept with true PCM/RRAM-based analog in-memory-compute systems.
+The current work focuses specifically on validating the **analog multiplication mechanism and software-to-hardware mapping**.
 
 ---
 
-# Device Characterization
+# SKY130 Device Characterization
 
-## Initial Minimum-Length Device
+## Channel-Length Selection
 
-The first synapse experiments used a minimum-length SKY130 NMOS:
+The first experiments used a minimum-length SKY130 NMOS:
 
 **L = 0.15 µm**
 
-Unexpected drain current remained present even with low gate bias and increased substantially with drain voltage.
+The device exhibited substantial low-gate-bias drain current and stronger drain-voltage dependence than desired for a simple approximately linear conductance cell.
 
-Because short-channel devices can exhibit effects including drain-induced barrier lowering and increased subthreshold conduction, the minimum-length device did not behave like the simple long-channel voltage-controlled resistor assumed by the initial model.
+The behavior was consistent with short-channel effects that violated the assumptions of the initial synapse model.
 
-The design was therefore changed to:
+The device was therefore changed to:
 
 **L = 1 µm**
 
-The longer-channel device produced significantly cleaner off-state behavior and a more useful approximately linear operating region.
+The longer-channel device provided cleaner off-state behavior and a more useful approximately linear operating region for the Phase 1 experiments.
 
 ---
 
-## Measured Rather Than Idealized Conductance
+## Measured Conductance
 
-The SKY130 MOS model uses a detailed BSIM device description.
+Rather than relying on an idealized square-law MOS model, conductance was extracted directly from the SKY130 BSIM simulation.
 
-Rather than relying on a simplified square-law MOS equation to estimate conductance, I extracted the behavior directly from ngspice simulations.
-
-For each selected gate voltage:
+For each gate bias:
 
 **G ≈ ΔI<sub>D</sub> / ΔV<sub>DS</sub>**
 
-within the chosen low-**V<sub>DS</sub>** read region.
+using the local slope of the simulated drain-current characteristic.
 
-This produced a measured:
+The initial five-point characterization produced:
 
-**G(V<sub>GS</sub>)**
+| VGS | Conductance |
+| ---: | ---: |
+| 0.8 V | 182 µS |
+| 0.9 V | 304 µS |
+| 1.0 V | 411 µS |
+| 1.1 V | 552 µS |
+| 1.2 V | 674 µS |
 
-lookup table.
+![Conductance LUT](figures/conductance_lut.png)
 
----
+*Figure 6 — Initial SKY130 conductance-versus-gate-voltage lookup table. Conductance magnitude was extracted from ngspice drain-current data and is used directly by the trained-weight mapping script.*
 
-![NMOS IV characterization](nmos_iv_characterization.png)
-
-*Figure 5 — SKY130 NMOS drain-current characterization across multiple gate biases. The low-VDS region is used to determine the useful approximately linear conductance range.*
-
----
-
-![Conductance LUT](conductance_lut.png)
-
-*Figure 6 — Extracted conductance versus gate voltage. Rather than relying on an ideal MOS square-law model, the neural-network weight mapping uses conductances measured directly from the SKY130 BSIM simulation.*
+A denser, fixed-VDS characterization is planned for the next iteration.
 
 ---
 
 # Weight-to-Hardware Mapping
 
-The trained SNN produces numerical weights:
+The trained network produces numerical weights:
 
 **w<sub>i</sub>**
 
-The hardware needs conductances:
+while the analog circuit requires physical conductances:
 
 **G<sub>i</sub>**
 
-The magnitude of each trained weight is therefore scaled into the characterized hardware conductance range.
+The mapping flow is:
 
-Conceptually:
+**|w<sub>i</sub>| → target G<sub>i</sub> → measured G(V<sub>GS</sub>) LUT → required V<sub>GS,i</sub>**
 
-**|w<sub>i</sub>| → G<sub>i</sub> → V<sub>GS,i</sub>**
+The magnitude of each trained weight is scaled onto the measured conductance range.
 
-Interpolation through the measured conductance lookup table determines the gate voltage required to approximately produce that target conductance.
+The measured LUT is then inverted through interpolation to determine the required gate bias.
 
-This creates the bridge between the software neural network and the analog circuit.
+Examples from the actual trained first layer include:
+
+| Trained Weight | Branch | Target Conductance | Required VGS |
+| ---: | :---: | ---: | ---: |
+| +0.0667 | G+ | 214.8 µS | 0.8269 V |
+| +0.2000 | G+ | 280.4 µS | 0.8807 V |
+| +0.3333 | G+ | 346.0 µS | 0.9393 V |
+| +0.4667 | G+ | 411.6 µS | 1.0004 V |
+| +0.6000 | G+ | 477.2 µS | 1.0470 V |
+| −0.6000 | G− | 477.2 µS | 1.0470 V |
+
+![Weight-to-hardware mapping](figures/weight_to_vgs_mapping.png)
+
+*Figure 7 — Mapping of real trained 4-bit SNN weights onto required SKY130 gate biases. The mapping is based on the measured conductance LUT rather than an idealized transistor equation.*
 
 ---
 
 ## Signed Weights
 
-Physical conductances are non-negative, while neural-network weights can be positive or negative.
+Physical conductance is non-negative, while neural-network weights can be positive or negative.
 
-The proposed architecture therefore uses differential conductance encoding:
+The proposed signed-weight architecture therefore assigns weights to differential branches:
 
 **w<sub>i</sub> ∝ G<sub>i</sub><sup>+</sup> − G<sub>i</sub><sup>−</sup>**
 
-A positive weight is represented primarily in the **G<sup>+</sup>** branch.
+Positive weights are assigned to the **G+** branch.
 
-A negative weight is represented primarily in the **G<sup>−</sup>** branch.
+Negative weights are assigned to the **G−** branch.
 
-For multiple inputs:
+The current Phase 1 script performs this branch assignment during weight mapping.
 
-**I<sup>+</sup> = Σ V<sub>i</sub>G<sub>i</sub><sup>+</sup>**
-
-**I<sup>−</sup> = Σ V<sub>i</sub>G<sub>i</sub><sup>−</sup>**
-
-and the signed result is:
-
-**I<sub>out</sub> = I<sup>+</sup> − I<sup>−</sup>**
+A full transistor-level differential pair is planned for the next phase.
 
 ---
 
-![Differential weight architecture](differential_synapse.png)
+# Two-Cell Analog Current-Summing Proof of Concept
 
-*Figure 7 — Differential representation of signed neural-network weights using positive and negative conductance branches.*
+To validate the analog-compute mechanism beyond one transistor, two characterized SKY130 synapse cells were connected to a common output node.
 
----
+The two gate biases came directly from real trained SNN weights:
 
-# Analog Multiply-Accumulate Validation
+- Weight **+0.4667** → **411.6 µS** → **VGS = 1.0004 V**
+- Weight **+0.3333** → **346.0 µS** → **VGS = 0.9393 V**
 
-The next step was to verify that multiple analog synapse cells could perform a summed multiplication.
+Both cells were evaluated using a common:
 
-For two independently driven cells:
+**V<sub>read</sub> = 50 mV**
 
-**I<sub>ideal</sub> = G<sub>1</sub>V<sub>1</sub> + G<sub>2</sub>V<sub>2</sub>**
+The idealized current contributions are:
 
-The devices share a common output column so their drain currents naturally sum.
+**I<sub>1</sub> = (411.6 µS)(0.05 V) = 20.58 µA**
 
-This reproduces the core operation required for vector-matrix multiplication.
+**I<sub>2</sub> = (346.0 µS)(0.05 V) = 17.30 µA**
 
----
+giving:
 
-![Two-cell MAC](two_cell_mac.png)
+**I<sub>sum,ideal</sub> = 37.88 µA**
 
-*Figure 8 — Two-element analog MAC proof of concept. Independently controlled input voltages drive two weight-programmed conductance cells whose currents sum at the output node.*
-
----
-
-## Initial MAC Result
-
-Using conductances independently extracted from the transistor characterization:
+The transistor-level ngspice simulation produced:
 
 **|I<sub>SPICE</sub>| = 31.15 µA**
 
-compared with an idealized hand calculation of:
+corresponding to an approximately:
 
-**I<sub>calc</sub> = 37.88 µA**
+**17.8% magnitude difference**
 
-giving a magnitude difference of approximately:
+from the LUT-based prediction.
 
-**17.8%**
+![Two-cell analog MAC](figures/two_cell_mac.png)
 
-The remaining error is useful rather than being hidden.
+*Figure 8 — Two-cell SKY130 analog current-summing proof of concept. Gate voltages of 1.0004 V and 0.9393 V are obtained from real trained SNN weights through the measured conductance LUT. With a common 50 mV read voltage, the two device currents sum at the shared output node.*
 
-It demonstrates that the MOS devices are not ideal linear resistors.
+The discrepancy is not hidden because it exposes the limitations of the initial analog model.
 
-Possible contributors include:
+Likely contributors include:
 
-- Finite V<sub>DS</sub>
-- Conductance dependence on V<sub>DS</sub>
-- Nonlinear device behavior between LUT points
-- Movement of the shared summing node
-- Coarse conductance interpolation
+- Finite VDS effects
+- MOS conductance nonlinearity
+- Conductance dependence on drain voltage
+- Coarse five-point LUT interpolation
+- Shared-node voltage behavior
 
-This motivates both denser device characterization and a virtual-ground column readout in the next phase.
+The current circuit demonstrates:
 
----
+**I<sub>out</sub> ≈ V<sub>read</sub>(G<sub>1</sub> + G<sub>2</sub>)**
 
-![MAC comparison](mac_validation.png)
+A future independently driven array will implement the more general operation:
 
-*Figure 9 — Comparison between ideal conductance-based MAC prediction and transistor-level ngspice simulation.*
+**I<sub>out</sub> = Σ G<sub>i</sub>V<sub>i</sub>**
 
 ---
 
 # From Stress Detection to Haptic Response
 
-The neuromorphic accelerator forms only the detection portion of the final wearable.
+The neuromorphic inference engine represents only the detection portion of the intended wearable.
 
-The stress output should not directly activate the haptic motor from a single classification sample.
+A single classifier output should not immediately trigger the actuator.
 
-Instead, the final system will include persistence and confidence logic.
+The future decision controller will instead consider:
 
-For example, haptic feedback could require:
+- Stress-confidence threshold
+- Persistence across multiple inference windows
+- Hysteresis
+- Maximum haptic duration
+- Refractory period
+- User override
+
+Conceptually, activation could require:
 
 **P(stress) > T**
 
 for several consecutive inference windows.
 
-This reduces the chance that a brief physiological fluctuation causes unnecessary activation.
+Once that condition is met, the system would generate a heartbeat-like pulse pattern and drive a wrist-mounted haptic actuator.
 
-A future controller will therefore implement:
-
-- Stress-confidence threshold
-- Minimum persistence time
-- Hysteresis
-- Maximum haptic duration
-- Refractory period
-- User override / stop
-
-Once the condition is satisfied, the controller drives a wrist-mounted haptic actuator with a heartbeat-like pulse pattern.
-
----
-
-![Stress decision and haptic control](haptic_control_architecture.png)
-
-*Figure 10 — Proposed stress-decision and haptic-response architecture. Sustained elevated stress confidence triggers a controlled heartbeat-like tactile waveform rather than responding immediately to individual classifier outputs.*
+Continued physiological sensing would then allow the eventual system to reassess the user's state after feedback.
 
 ---
 
@@ -511,49 +542,25 @@ Once the condition is satisfied, the controller drives a wrist-mounted haptic ac
 
 Phase 1 currently demonstrates:
 
-- Physiological preprocessing of real WESAD ECG and EDA data
-- R-peak-derived heart-rate extraction
-- Phasic EDA extraction using NeuroKit2
-- LIF-based SNN implementation in snnTorch
-- Direct firing-rate telemetry for diagnosing dead and saturated SNN states
-- 4-bit quantization-aware weight training
-- SKY130 NMOS characterization as a voltage-controlled conductance
-- Identification of minimum-channel-length behavior that violated the intended simple linear-cell assumption
-- Transition to a longer-channel device with more suitable analog behavior
-- Direct extraction of a conductance-versus-V<sub>GS</sub> lookup table
-- Mapping of real trained SNN weights into physical conductance targets
-- Differential G<sup>+</sup>/G<sup>−</sup> architecture for signed weights
-- Small-scale transistor-level analog MAC validation
+- Real WESAD ECG and EDA preprocessing
+- NeuroKit2 heart-rate and phasic-EDA extraction
+- Six physiologically informed stress features
+- Rate encoding into spike trains
+- LIF-based spiking neural-network inference
+- Firing-rate telemetry for diagnosing SNN failure modes
+- 4-bit quantization-aware neural-network weights
+- Preliminary 82.4% development validation accuracy
+- 82.3% balanced accuracy
+- 82.0% stress recall
+- SKY130 NMOS characterization as an analog conductance
+- Transition from a minimum-length device to a longer-channel device better suited to the intended synapse model
+- Five-point measured G(VGS) lookup table
+- Mapping of real trained SNN weights to physical conductance targets
+- Mapping of conductance targets to required transistor gate voltages
+- Proposed differential G+/G− sign representation
+- Two-cell transistor-level analog current summation using gate biases derived from actual trained weights
 
-The current SNN result on the limited four-subject development subset is:
-
-**Best validation accuracy: 60.6%**
-
-with a majority-class baseline of approximately:
-
-**65%**
-
-This means the current classifier does **not yet outperform the trivial baseline**.
-
-Rather than presenting this as a successful stress classifier, I treat it as an unresolved Phase 1 algorithm result.
-
-The next algorithm experiments will determine whether the limitation comes primarily from:
-
-- Insufficient subject diversity
-- Feature representation
-- Normalization
-- SNN architecture
-- Temporal encoding
-- Class imbalance
-- Hyperparameters
-
----
-
-# What Phase 1 Establishes
-
-The most important result of Phase 1 is not classification accuracy alone.
-
-It establishes an end-to-end hardware/software path:
+The most important Phase 1 result is the complete chain:
 
 **Physiological data**  
 ↓  
@@ -561,28 +568,47 @@ It establishes an end-to-end hardware/software path:
 ↓  
 **Spike encoding**  
 ↓  
-**Quantized SNN**  
+**4-bit quantized SNN**  
 ↓  
-**Trained numerical weights**  
+**Real trained weights**  
 ↓  
 **Measured SKY130 conductances**  
 ↓  
-**Analog multiplication / accumulation**
+**Required gate biases**  
+↓  
+**Transistor-level analog current summation**
 
-This provides the foundation for evaluating whether a neuromorphic hardware architecture could eventually support the wearable's continuous stress-inference workload.
+---
+
+# Current Limitations
+
+This is intentionally a Phase 1 proof of concept.
+
+Current limitations include:
+
+- Development validation currently uses only two WESAD subjects
+- Validation is window-random rather than subject-held-out
+- Overlapping windows introduce correlation between nearby samples
+- The conductance LUT currently contains only five measured gate-bias points
+- The NMOS cell requires an externally generated gate bias and is not itself a nonvolatile memory element
+- Signed G+/G− weight representation has not yet been implemented as a complete differential transistor-level circuit
+- The current two-cell circuit uses a common read voltage rather than independent V1/V2 inputs
+- No complete analog VMM array has yet been implemented
+- The physical wearable sensor and haptic electronics are future phases
+
+These limitations define the next set of engineering experiments rather than being treated as completed functionality.
 
 ---
 
 # Phase 2 — Hardware-Aware Neuromorphic Accelerator
 
-The next phase will extend the single-cell / small-MAC proof of concept into a more realistic accelerator architecture.
-
 Planned work includes:
 
-- 16 distinguishable conductance states for true 4-bit mapping
-- Denser G(V<sub>GS</sub>) characterization
-- Differential signed-weight MAC implementation
-- Independently driven MAC inputs
+- Denser conductance characterization
+- 16 distinguishable effective conductance levels
+- Fixed-read-voltage LUT extraction
+- Differential signed-weight hardware
+- Independently driven analog MAC inputs
 - Virtual-ground / transimpedance column readout
 - 4×4 vector-matrix multiplication array
 - Python-versus-SPICE VMM comparison
@@ -590,50 +616,50 @@ Planned work includes:
 - Process-corner analysis
 - Temperature analysis
 - Analog-error-aware SNN inference
-- Quantization precision comparison
+- Subject-held-out WESAD validation
 
 ---
 
 # Phase 3 — Wearable Sensor Electronics
 
-Once the inference architecture is established, the project will move from prerecorded dataset input toward physical sensing.
+The next system-level stage will move from prerecorded dataset input toward real sensing.
 
 Planned hardware includes:
 
-- ECG or PPG sensing
+- PPG or ECG sensing
 - EDA acquisition
-- Low-noise analog front end
+- Low-noise analog front ends
 - ADC
 - Embedded controller
-- Power-management system
 - Battery
+- Power-management circuitry
 - Neuromorphic inference interface
+
+ECG is used in the current WESAD algorithm work; PPG is being considered for a more practical wrist-integrated implementation.
 
 ---
 
 # Phase 4 — Heartbeat-Like Haptic Feedback
 
-The detection output will be connected to a wearable haptic subsystem.
+The classifier output will eventually control a wearable haptic subsystem:
 
-The planned signal path is:
+**Stress decision → haptic waveform generator → actuator driver → wrist-mounted actuator**
 
-**Stress-state decision → haptic waveform controller → actuator driver → wrist-mounted haptic actuator**
+Rather than continuous vibration, the proposed actuator pattern is intended to resemble a controlled heartbeat.
 
-Rather than producing continuous vibration, the actuator will generate a deliberate pulse pattern intended to resemble a calm heartbeat.
+The effectiveness of such a cue would require separate human-factors and clinical validation.
 
 ---
 
 # Phase 5 — Closed-Loop Wearable
 
-The final architectural goal is:
+The eventual architectural goal is:
 
 **Sense → infer → respond → reassess**
 
-Physiological signals continue to be monitored after haptic activation, allowing the system to observe whether the user's physiological state changes.
+Physiological signals would continue to be monitored after haptic activation, allowing the system to observe whether the user's physiological state changes.
 
-This creates a closed-loop architecture rather than a one-shot alarm.
-
-Any eventual testing involving vulnerable populations or minors would require appropriate research ethics approval, safeguarding procedures, and relevant clinical/research supervision.
+Any eventual testing involving vulnerable populations or minors would require appropriate ethics approval, safeguarding procedures, guardian consent / child assent where applicable, and relevant clinical or research supervision.
 
 The current work is an engineering proof of concept and does not constitute a medical diagnostic or treatment device.
 
@@ -643,50 +669,42 @@ The current work is an engineering proof of concept and does not constitute a me
 
 ## Algorithm
 
-- Does performance improve substantially when training across more WESAD subjects?
-- How does subject-independent performance compare with subject-specific performance?
-- Are heart rate and phasic EDA sufficient?
-- Would HRV and additional EDA features improve separability?
+- How well does the SNN generalize to completely unseen subjects?
+- How does performance change across the full WESAD cohort?
+- Would HRV features improve subject-independent performance?
 - Can event-based encoding reduce spike activity while preserving classification?
+- What is the lowest useful weight precision?
 
-## Hardware
+## Analog Hardware
 
-- How many distinct conductance states remain separable across process and temperature variation?
-- How strongly does V<sub>DS</sub> nonlinearity affect MAC accuracy?
-- Can a virtual-ground column architecture substantially reduce error?
-- How much classification degradation results from real analog weight error?
-- What is the most practical mechanism for storing or generating synaptic weight voltages?
+- How many conductance levels remain distinguishable across PVT variation?
+- How much does VDS dependence affect MAC accuracy?
+- How much does a virtual-ground readout reduce column error?
+- How should signed weights be represented most efficiently?
+- How should synaptic gate voltages ultimately be stored or generated?
+- How much does measured analog weight error degrade classifier performance?
 
 ## Wearable System
 
-- What stress-confidence threshold should trigger haptic feedback?
-- How long should elevated stress persist before activation?
-- What haptic waveform is most appropriate?
-- What sensing modality gives the best power / robustness tradeoff for a wrist-worn implementation?
-
----
-
-# Phase 1 Completion Checklist
-
-Before marking Phase 1 complete:
-
-- [ ] SNN trains and performs inference on WESAD-derived physiological features
-- [ ] Accuracy and balanced classification metrics reported
-- [ ] Firing-rate behavior characterized
-- [ ] 4-bit quantized weights exported
-- [ ] SKY130 NMOS analog operating region characterized
-- [ ] Dense G(V<sub>GS</sub>) lookup table generated
-- [ ] Real trained SNN weights mapped to conductance
-- [ ] Positive and negative weight mapping demonstrated
-- [ ] Two independent analog MAC inputs simulated
-- [ ] SPICE MAC result compared numerically against expected value
-- [ ] Wearable system architecture diagram completed
-- [ ] Phase 1 architecture diagram completed
-- [ ] Device-characterization plots added
-- [ ] Code and simulation repository linked
+- Which wrist-compatible sensing modality provides the best power / robustness tradeoff?
+- How long should elevated stress persist before haptic activation?
+- What stress-confidence threshold minimizes false triggering?
+- What heartbeat-like waveform is most appropriate?
+- What power budget can the complete system realistically achieve?
 
 ---
 
 # Repository
 
-Source code, ngspice simulations, SKY130 characterization scripts, SNN training code, and generated results will be available in the associated project repository.
+The repository contains the current:
+
+- WESAD preprocessing and feature extraction code
+- snnTorch training code
+- 4-bit weight export
+- firing-rate and validation analysis
+- weight-to-conductance / VGS mapping scripts
+- SKY130 / ngspice synapse simulations
+- analog current-summing proof of concept
+- generated characterization and training figures
+
+**Repository:** [Source code and simulations](https://github.com/MehakKhan05/CPTSD-Wearable)
