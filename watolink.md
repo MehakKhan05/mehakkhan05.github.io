@@ -301,7 +301,126 @@ The absolute impedance itself is not the only problem.
 
 What matters significantly for differential measurement is the **difference in impedance between the two inputs**.
 
+## Real-Time EMG Acquisition & Logging Tool
+
+To actually see what the noisy EMG data looked like in real time (rather than only inspecting it after the fact),
+I wrote a Python acquisition tool that reads the two-channel serial stream, buffers it safely across threads,
+renders it live, and logs every sample to CSV for offline analysis.
+
+- A dedicated **serial-reader thread** parses incoming lines and appends samples to a lock-protected `deque`,
+  decoupled from the GUI/plot loop so a slow render never blocks or drops incoming serial data.
+- A **pyqtgraph** live dual-channel plot renders the EMG stream in real time for immediate visual feedback
+  during testing (e.g. spotting motion artifact or baseline drift as it happens).
+- Every sample is timestamped and written to a **CSV log** for offline analysis, independent of the live plot buffer.
+
+```python
+import serial
+import threading
+from collections import deque
+import time
+import csv
+
+import pyqtgraph as pg
+from pyqtgraph.Qt import QtCore, QtWidgets
+
+import numpy as np
+
+# ---------------- CONFIG ----------------
+PORT = "COM4"
+BAUDRATE = 115200
+BUFFER_SIZE = 1000
+
+FS = 100
+PLOT_Y_LIM = 32000
+
+CSV_FILENAME = "data.csv"
+
+# ---------------- SERIAL ----------------
+ser = serial.Serial(PORT, BAUDRATE, timeout=10)
+
+# ---------------- SHARED BUFFERS ----------------
+ch1 = deque(maxlen=BUFFER_SIZE)
+ch2 = deque(maxlen=BUFFER_SIZE)
+
+# Logging buffer
+log_buffer = deque(maxlen=5000)
+
+lock = threading.Lock()
+
+# ---------------- CSV SETUP ----------------
+csv_file = open(CSV_FILENAME, mode='w', newline='')
+csv_writer = csv.writer(csv_file)
+
+# Write header
+csv_writer.writerow(["timestamp", "ch1", "ch2"])
+
+start_time = time.time()
+
+# ---------------- SERIAL THREAD ----------------
+def serial_reader():
+    buffer = b""
+
+    while True:
+        data = ser.read(ser.in_waiting or 1)
+        if not data:
+            continue
+
+        buffer += data
+
+        while b"\n" in buffer:
+            line, buffer = buffer.split(b"\n", 1)
+
+            try:
+                parts = line.decode().strip().split(",")
+
+                if len(parts) == 2:
+                    v2, v3 = map(int, parts)
+
+                    timestamp = time.time() - start_time
+
+                    with lock:
+                        ch1.append(v2)
+                        ch2.append(v3)
+
+                        # Add to logging buffer
+                        log_buffer.append((timestamp, v2, v3))
+            except:
+                pass
+
+threading.Thread(target=serial_reader, daemon=True).start()
+
+# ---------------- PLOT APP ----------------
+app = QtWidgets.QApplication([])
+win = pg.GraphicsLayoutWidget(show=True, title="EMG Real-Time Streaming DSP")
+win.resize(1000, 600)
+
+plot = win.addPlot(title="EMG Envelope (Normalized)")
+plot.setYRange(0, PLOT_Y_LIM)
+plot.addLegend()
+
+curve2 = plot.plot(pen='b', name="EMG CH1")
+curve3 = plot.plot(pen='y', name="EMG CH2")
+
+# ---------------- UPDATE LOOP ----------------
+def update():
+    with lock:
+        d1 = np.array(ch1)
+        d2 = np.array(ch2)
+
+        # Copy log data and clear buffer
+        data_to_write = list(log_buffer)
+        log_buffer.clear()
+
+    # Update plot
+    curve2.setData(d1)
+    # ... remaining plot-update, CSV-flush, and Qt timer/exec setup omitted here for brevity
+```
+
+*(Snippet edited for length — full script also flushes `data_to_write` to `csv_writer`, updates `curve3`, and drives
+the loop via a `QtCore.QTimer` before calling `app.exec()`.)*
+
 ---
+
 
 ## Why Electrode-Impedance Mismatch Matters
 
