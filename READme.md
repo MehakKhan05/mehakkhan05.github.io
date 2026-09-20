@@ -42,10 +42,14 @@ A spiking neural network trained on real WESAD physiological data, with trained 
 *Active — board fabrication and impedance-mismatch fix in progress.*
 2-layer main PCB (power management, ESP32-S3, sensor ADCs, servo control) for a wearable EMG biosignal control system, as Hardware Lead.
 
+### [STM32 Reservoir Control System — Custom PCB & Embedded Firmware](./stm32-reservoir-control-system.md**)
+
+A custom 2-layer STM32F401RE control PCB integrating DC-motor drive, servo actuation, ultrasonic reservoir-level sensing, RPM measurement, ADC acquisition, RGB status indication, and external display interfaces. Developed timer- and interrupt-driven firmware using PWM, ADC, UART, input capture, and external interrupts, then assembled, soldered, and integrated the board with the physical system.
 ---
 
 ## Coming Soon
-- UWASIC bandgap reference — final PSRR results, Verilog-A model, hand-derivation writeup
+- UWASIC Low-Power 64Gb/s PAM4 Transmitter in 65nm CMOS
 - Watolink — fabrication results and validated impedance-buffering fix
 - ECE 373 (Microwave Circuits) — HF PCB design
 - ECE 320 (Computer Architecture) project
+- SYDE 556 Neural Engineering Project
