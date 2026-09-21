@@ -8,7 +8,7 @@ Third-year Electrical Engineering (BASc Honours) at the University of Waterloo, 
 
 ## About
 
-I work across the stack from transistor-level analog IC design up through digital hardware and, most recently, into the ML side of hardware-software co-design. My projects lean toward proving things out from first principles — measured device characterization over textbook constants, real debugging over polished demos, and being upfront about what's finished versus still in progress.
+I work across the stack from transistor-level analog IC design up through digital hardware and, most recently, into the ML side of hardware-software co-design. 
 
 Currently targeting Winter 2027 co-ops in analog/mixed-signal design and verification.
 
