@@ -46,7 +46,15 @@ A spiking neural network trained on real WESAD physiological data, with trained 
 
 A custom 2-layer STM32F401RE control PCB integrating DC-motor drive, servo actuation, ultrasonic reservoir-level sensing, RPM measurement, ADC acquisition, RGB status indication, and external display interfaces. Developed timer- and interrupt-driven firmware using PWM, ADC, UART, input capture, and external interrupts, then assembled, soldered, and integrated the board with the physical system.
 
+## Selected Experimental Work
 
+### [Control Systems & Motor Characterization — ECE 380](./ece380-control-systems-labs.md)
+
+Experimental characterization of open- and closed-loop systems, DC-motor dynamics, and P/PI/PD/PID controllers using measured bandwidth, transient response, steady-state error, overshoot, and settling time.
+
+### [Signals, Spectrum Analysis & Analog Communications — ECE 318](./ece318-signals-communications-labs.md)
+
+Hands-on signal and communications experiments spanning oscilloscope/FFT measurements, Fourier analysis, filtering, VCO characterization, DSB/SSB amplitude modulation, coherent demodulation, and quadrature multiplexing.
 ---
 
 ## Coming Soon
