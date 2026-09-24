@@ -55,6 +55,12 @@ Experimental characterization of open- and closed-loop systems, DC-motor dynamic
 ### [Signals, Spectrum Analysis & Analog Communications — ECE 318](./ece318-signals-communications-labs.md)
 
 Hands-on signal and communications experiments spanning oscilloscope/FFT measurements, Fourier analysis, filtering, VCO characterization, DSB/SSB amplitude modulation, coherent demodulation, and quadrature multiplexing.
+
+### [Analog Amplifier Characterization — ECE 340](./ece340-analog-electronics-labs.md)
+
+Experimental and LTspice characterization of MOS common-source, common-drain, and differential amplifiers, including DC biasing, common- and differential-mode transfer characteristics, gain and transconductance extraction, input common-mode range, and comparison of measured device behavior against square-law MOS models.
+
+
 ---
 
 ## Coming Soon
